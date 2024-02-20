@@ -1,0 +1,5 @@
+1. create rule scripts
+    generate a set of input-output examples for a given rule
+2. a dataset is a bunch of rule scripts
+3. the key question is - can I generalize to rules outside of the training set...
+4. do I need to do normal pretraing like an LM?
