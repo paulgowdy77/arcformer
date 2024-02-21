@@ -3,3 +3,47 @@
 2. a dataset is a bunch of rule scripts
 3. the key question is - can I generalize to rules outside of the training set...
 4. do I need to do normal pretraing like an LM?
+
+
+---
+
+In some previous attempt at this,
+was there a "generate_example_set" method within rules?
+i.e. dont make examples one at a time, but make a set of X at once?
+maybe thats the way to do both linked and unlinked examples
+also covers variable examples per set by rule (some rules might have 4 examples per set, some might have 6)
+
+the config is another way to handle this
+you can generate things within the config (that will apply to the whole example set)
+or within the example_func which will then vary by example within a set
+
+----
+
+need to think carefully about example sets
+some rules have linked examples (i.e. its always the same color that plays a part in the rule)
+others each example is stand alone and they can be combined however we want
+
+need to make a generation pipeline + config structure that can capture both versions here
+
+---
+
+
+
+lets assume I do want to do normal pretraining
+need to get up to several HUNDRED MILLION pixels
+pixels will reduce if I tokenize
+but could just operate on the pixels directly
+
+---
+
+did some back of the envelope math
+I'll need 3000-5000 rules...
+if I make 100 examples per rule (can increase this)
+assuming an average image size of 16 (which is probably too big...)
+thats crazy
+can I possibly come up with that many good ones?
+maybe can do this with fewer tokens
+this isn't natural language after all
+
+---
+
