@@ -4,7 +4,7 @@ import os
 from rule import Rule
 from plotter_utils import display_example_list
 
-rule_filename = 'rules.majority_fill'
+rule_filename = 'rules.odd_color_out'
 
 rule_module = importlib.import_module(rule_filename)
 config = rule_module.generate_config()
