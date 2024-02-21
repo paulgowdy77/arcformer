@@ -16,25 +16,22 @@ def generate_example(config):
     height = random.randint(config["min_height"], config["max_height"])
     width = random.randint(config["min_width"], config["max_width"])
 
-    input_matrix = np.zeros((height, width))
-    output_matrix = np.zeros((height, width))
+    nb_colors = random.randint(2, 5)
+    colors = random.sample(range(0,9), nb_colors+1)
 
-    for i in range(height):
-        for j in range(width):
-            if random.random() > 0.5:
-                input_matrix[i, j] = 1
-            else:
-                input_matrix[i, j] = 0
+    input = np.ones((height, width), dtype=int) * colors[0]
 
-    for i in range(height):
-        for j in range(width):
-            if random.random() > 0.5:
-                output_matrix[i, j] = 1
-            else:
-                output_matrix[i, j] = 0
+    color_counts = random.sample(range(1, 20), nb_colors)
+    color_counts.sort()
 
-    example = (input_matrix, output_matrix)
-    return example
+    for i, cc in enumerate(color_counts):
+        for j in range(cc):
+            x = random.randint(0, width-1)
+            y = random.randint(0, height-1)
+            input[y, x] = colors[i+1]
+
+    output = np.ones((height, width), dtype=int) * colors[-1]
+    return input, output
 
 def example_func():
     return generate_example
