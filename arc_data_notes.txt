@@ -17,6 +17,14 @@ the config is another way to handle this
 you can generate things within the config (that will apply to the whole example set)
 or within the example_func which will then vary by example within a set
 
+so upon reflection
+I can get this behavior just through the config as currently implemented
+the config is share across all examples in an example set (or at least can be)
+so it can share information, say a list of colors or whatever
+but one missing piece: how does an example in the example set no which it is in the order 
+does that matter?
+
+
 ----
 
 need to think carefully about example sets
