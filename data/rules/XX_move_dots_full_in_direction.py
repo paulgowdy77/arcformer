@@ -24,29 +24,22 @@ def generate_example(config):
         input[y, x] = random.choice(colors[1:])
         output[y, x] = input[y, x]
 
-        # move the dots in the direction specified in the config
-        # until they hit the edge of the grid
-        # or another dot
-        if direction == "up":
-            while output[y-1, x] == colors[0] and y > 0:
-                output[y-1, x] = output[y, x]
-                output[y, x] = colors[0]
-                y -= 1
-        elif direction == "down":
-            while output[y+1, x] == colors[0] and y < 10:
-                output[y+1, x] = output[y, x]
-                output[y, x] = colors[0]
-                y += 1
-        elif direction == "left":
-            while output[y, x-1] == colors[0] and x > 0:
-                output[y, x-1] = output[y, x]
-                output[y, x] = colors[0]
-                x -= 1
-        elif direction == "right":
-            while output[y, x+1] == colors[0] and x < 10:
-                output[y, x+1] = output[y, x]
-                output[y, x] = colors[0]
-                x += 1
+    # move the dots in the direction specified in the config
+    # until they hit the edge of the grid
+    # or another dot
+    # need to iterate over the grid in the opposite direction of the movement
+    # to avoid overwriting the dots
+    # only move the dots in the output
+        
+    # move the dots until they hit the edge of the grid
+    # or another dot
+        
+    if direction == "up":
+        for y in range(1, 11):
+            for x in range(1, 11):
+                while output[y, x] != 1 and output[y-1, x] == 1:
+                    output[y-1, x] = output[y, x]
+                    output[y, x] = 1
 
 
     return input, output
