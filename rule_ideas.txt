@@ -1,7 +1,7 @@
 
 XX square_fill with random sized squares
-square_fill but the output is just the cropped square
-sqaure_fill but the output is a 2x2 of the background color
+XX square_fill but the output is just the cropped square
+XX sqaure_fill but the output is a 2x2 of the background color
 
 square_fill but its random shapes and if more than half the square is filled, then fill it all
 otherwise outout=input
