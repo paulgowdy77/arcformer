@@ -4,7 +4,7 @@ import os
 from rule import Rule
 from plotter_utils import display_example_list
 
-rule_filename = 'rules.shrink_two_by_two'
+rule_filename = 'rules.corner_fill_reverse'
 
 rule_module = importlib.import_module(rule_filename)
 config = rule_module.generate_config()

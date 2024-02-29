@@ -10,7 +10,7 @@ color_dict = {
     5: "yellow",
     6: "cyan",
     7: "magenta",
-    8: "orange",
+    8: "white",
     9: "purple"
 }
 
