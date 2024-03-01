@@ -4,7 +4,7 @@ import os
 from rule import Rule
 from plotter_utils import display_example_list
 
-rule_filename = 'rules.seperate_odd_color_out'
+rule_filename = 'rules.half_fill'
 
 rule_module = importlib.import_module(rule_filename)
 config = rule_module.generate_config()
@@ -22,6 +22,9 @@ for i in range(EXAMPLE_SETS):
         example = rule.generate_example()
         example_set.append(example)
     example_sets.append(example_set)
+
+for i in range(4):
+    display_example_list(example_sets[i])
 
 out_file = 'data/pickled_example_sets/' + rule_filename.split('.')[1] + '_examples.pkl'
 
