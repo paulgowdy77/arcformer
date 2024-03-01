@@ -4,7 +4,7 @@ import os
 from rule import Rule
 from plotter_utils import display_example_list
 
-rule_filename = 'rules.XX_move_shape'
+rule_filename = 'rules.reflect_4_reverse'
 
 rule_module = importlib.import_module(rule_filename)
 config = rule_module.generate_config()
