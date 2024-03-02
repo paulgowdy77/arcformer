@@ -78,3 +78,11 @@ for rule_name in rules:
 
 random.shuffle(FLATTENED_EXAMPLE_SETS)
 
+# print the length of all examples combined
+print("Number of example sets:", len(FLATTENED_EXAMPLE_SETS))
+print("total pixels in all example sets:", sum([len(example_set) for example_set in FLATTENED_EXAMPLE_SETS]))
+
+# write the processed examples to a file
+with open(f'data/datasets_v1/{timestamp}/processed_examples/processed_examples.pkl', 'wb') as f:
+    pickle.dump(FLATTENED_EXAMPLE_SETS, f)
+
