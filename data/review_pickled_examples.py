@@ -2,7 +2,7 @@ import pickle
 from plotter_utils import display_example_list
 import random
 
-rule = 'half_fill'
+rule = 'reflect_4'
 
 with open(f'data/pickled_example_sets/{rule}_examples.pkl', 'rb') as f:
     example_sets = pickle.load(f)

@@ -1,0 +1,35 @@
+
+the core problem:
+
+this isnt like natural language
+where tokens have a direct impact on next tokens
+high locality
+
+here there's some rule for each example set
+have to learn the rule from the set
+the whole output has to be right
+
+might be able to get there from next token prediction...
+but will take a lot of examples
+its just not effecient
+
+on the other hand, just doing a long string of flattened example sets back to back might be more effecient...
+since I can pack in more and more examples
+
+think about it carefully though
+at the 'document boundaries'
+the end of one example set and the start of another
+there's no actual relationship between the first rule and second rule
+no way to learn that prediction 
+
+compare to words
+ttheres not a super strong relationship between paragraphs
+how did they handle document splits
+
+
+FOR NOW
+just try the direct naive approach 
+treat these tokens as word tokens 
+do byte pair encoding
+see how far I get...
+

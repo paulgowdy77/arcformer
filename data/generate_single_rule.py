@@ -4,7 +4,7 @@ import os
 from rule import Rule
 from plotter_utils import display_example_list
 
-rule_filename = 'rules.half_fill'
+rule_filename = 'rules.reflect_4'
 
 rule_module = importlib.import_module(rule_filename)
 config = rule_module.generate_config()

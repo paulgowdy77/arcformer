@@ -1,11 +1,5 @@
 import pickle 
 
-rule_name = 'half_fill'
-
-with open(f'data/pickled_example_sets/{rule_name}_examples.pkl', 'rb') as f:
-    example_sets = pickle.load(f)
-
-FLATTENED_EXAMPLE_SETS = []
 
 SPECIAL_CHARACTERS = {
     # 10 should not be used in a grid, but leave it as a buffer
@@ -39,8 +33,16 @@ def unpack_example_set(example_set):
 
         
 
-for example_set in example_sets[:1]:
-    unpacked_set = unpack_example_set(example_set)
-    FLATTENED_EXAMPLE_SETS.append(unpacked_set)
+if __name__ == "__main__":
 
-print(FLATTENED_EXAMPLE_SETS[0])
+    rule_name = 'reflect_4'
+    
+    FLATTENED_EXAMPLE_SETS = []
+
+    with open(f'data/pickled_example_sets/{rule_name}_examples.pkl', 'rb') as f:
+        example_sets = pickle.load(f)
+
+    for example_set in example_sets[:]:
+        unpacked_set = unpack_example_set(example_set)
+        FLATTENED_EXAMPLE_SETS.append(unpacked_set)
+        print(len(unpacked_set))
