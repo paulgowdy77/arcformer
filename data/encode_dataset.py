@@ -7,3 +7,13 @@ with open(merge_file, 'rb') as f:
 
 print(merges.keys())
 print(merges['token_count'])
+
+
+print(merges)
+
+
+vocab = {idx: idx  for idx in range(merges['token_count'])}
+for (p0, p1), idx in merges['merges'].items():
+    vocab[idx] = vocab[p0] + vocab[p1]
+
+print(vocab)
