@@ -30,10 +30,17 @@ rules = [
     'reflect_4_reverse',
     'reflect_4',
     'seperate_odd_color_out',
-    'shared_odd_color_out'
+    'shared_odd_color_out',
+    'shrink_two_by_two',
+    'simple_denoising',
+    'square_fill_random_size',
+    'square_fill',
+    'square_remove',
+    'square_to_background_square',
+    'square_to_output'
 ]
 
-EXAMPLE_SETS = 500
+EXAMPLE_SETS = 800
 EXAMPLES_PER_SET = 4
 
 # pickle example sets

@@ -1,7 +1,7 @@
 import pickle 
+import matplotlib.pyplot as plt
 
-
-date = '20240301-1716'
+date = '20240301-2016'
 
 with open(f'data/datasets_v1/{date}/processed_examples/processed_examples.pkl', 'rb') as f:
     example_sets = pickle.load(f)
@@ -34,9 +34,11 @@ def merge(ids, pair, idx):
   return newids
 
 token_count = max(all_examples) + 1
-target_vocab_size = 128 # the desired final vocabulary size
+target_vocab_size = 256 # the desired final vocabulary size
 num_merges = target_vocab_size - token_count 
 ids = list(all_examples) # copy so we don't destroy the original list
+
+collect_text_length = []
 
 merges = {} # (int, int) -> int
 for i in range(num_merges):
@@ -46,8 +48,19 @@ for i in range(num_merges):
     print(f"merging {pair} into a new token {idx}")
     ids = merge(ids, pair, idx)
     print("text length condensed:", len(ids))
+    collect_text_length.append(len(ids))
     print("")
     merges[pair] = idx
 
 print("total pixels in all example sets:", sum([len(example_set) for example_set in example_sets]))
 print("final vocabulary size:", len(ids))
+
+plt.figure()
+plt.plot(collect_text_length)
+plt.show()
+
+with open(f'data/datasets_v1/{date}/processed_examples/processed_examples_bpe_MERGES.pkl', 'wb') as f:
+    pickle.dump({
+        "merges": merges,
+        "token_count": token_count,
+    }, f)
