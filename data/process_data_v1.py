@@ -6,7 +6,10 @@ SPECIAL_CHARACTERS = {
     "END_ROW": 11,
     "END_GRID": 12,
     "END_EXAMPLE": 13,
+    "END_EXAMPLE_SET": 14
 }
+
+# TODO: need an "END_EXAMPLE_SET" character to separate example sets
 
 def unpack_grid(grid):
     height = grid.shape[0]
@@ -29,6 +32,7 @@ def unpack_example_set(example_set):
         unpacked_example_set.extend(unpacked_OUTPUT_grid)
         unpacked_example_set.append(SPECIAL_CHARACTERS["END_GRID"])
         unpacked_example_set.append(SPECIAL_CHARACTERS["END_EXAMPLE"])
+    unpacked_example_set.append(SPECIAL_CHARACTERS["END_EXAMPLE_SET"])
     return unpacked_example_set
 
         
