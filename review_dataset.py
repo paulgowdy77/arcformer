@@ -1,5 +1,6 @@
 import numpy as np
 from data.arc_tokenizer import ArcTokenizer
+from data.plotter_utils import display_example_list
 
 dataset = 'data/datasets_v1/20240303-2251/encoded_files/encoded_data_slice_1.npy'
 
@@ -46,11 +47,11 @@ def deprocess_example_set(processed_example_set):
         for grid in grids
     ]
 
-    #print("input:", full_split[2]['input'])
-    #print("output:", full_split[2]['output'])
     return full_split
 
 example_sets = split_list(decoded, 14)
 print("example sets:", len(example_sets))
 
-deprocess_example_set(example_sets[0])
+for k in range(20,25):
+    z = deprocess_example_set(example_sets[k])
+    display_example_list(z)
