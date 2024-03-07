@@ -52,6 +52,6 @@ def deprocess_example_set(processed_example_set):
 example_sets = split_list(decoded, 14)
 print("example sets:", len(example_sets))
 
-for k in range(20,25):
+for k in range(40,45):
     z = deprocess_example_set(example_sets[k])
     display_example_list(z)
