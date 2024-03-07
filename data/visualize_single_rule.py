@@ -4,7 +4,7 @@ import os
 from rule import Rule
 from plotter_utils import display_example_list
 
-rule_filename = 'rules.flip_random'
+rule_filename = 'rules.fill_stamp_reverse'
 
 rule_module = importlib.import_module(rule_filename)
 config = rule_module.generate_config()
