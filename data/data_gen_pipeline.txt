@@ -27,6 +27,14 @@ create "encoded_data_slices", which are the same splits as above
 but now tokens - where each token is potentially many pixels+special chars 
 these encoded_data_slices are what the model will train on directly
 
+------
+so the pipeline is:
+1. create_dataset_v1_all
+2. create_bpe_merges_dataset (or use existing merges for tokenizer)
+3. tokenize_dataset
+
+not too bad 
+could still be condensed a bit
 
 
 

@@ -4,7 +4,7 @@ import numpy as np
 import glob
 import os
 
-date_str = "20240303-2251"
+date_str = "20240308-0920"
 
 tokenizer = ArcTokenizer(f'data/datasets_v1/{date_str}/processed_examples_bpe_MERGES.pkl')
 
