@@ -2,7 +2,8 @@ import pickle
 import matplotlib.pyplot as plt
 import glob
 
-date = '20240303-2251'
+date = '20240308-0920'
+TARGET_VOCAB_SIZE = 256 # the desired final vocabulary size
 
 processed_examples_files = glob.glob(f'data/datasets_v1/{date}/processed_examples/*.pkl')
 
@@ -37,8 +38,7 @@ def merge(ids, pair, idx):
   return newids
 
 token_count = max(all_examples) + 1
-target_vocab_size = 256 # the desired final vocabulary size
-num_merges = target_vocab_size - token_count 
+num_merges = TARGET_VOCAB_SIZE - token_count 
 ids = list(all_examples) # copy so we don't destroy the original list
 
 collect_text_length = []
@@ -65,5 +65,5 @@ plt.show()
 with open(f'data/datasets_v1/{date}/processed_examples_bpe_MERGES.pkl', 'wb') as f:
     pickle.dump({
         "merges": merges,
-        "token_count": token_count,
+        "initial_token_count": token_count,
     }, f)

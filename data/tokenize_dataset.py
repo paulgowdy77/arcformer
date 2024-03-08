@@ -4,15 +4,16 @@ import numpy as np
 import glob
 import os
 
-tokenizer = ArcTokenizer('data/datasets_v1/20240303-2251/processed_examples_bpe_MERGES.pkl')
+date_str = "20240303-2251"
 
+tokenizer = ArcTokenizer(f'data/datasets_v1/{date_str}/processed_examples_bpe_MERGES.pkl')
 
-example_files = glob.glob('data/datasets_v1/20240303-2251/processed_examples/*.pkl')
+example_files = glob.glob(f'data/datasets_v1/{date_str}/processed_examples/*.pkl')
 print("example files:", len(example_files))
 
 # make encoded folder
-if not os.path.exists('data/datasets_v1/20240303-2251/encoded_files'):
-    os.makedirs('data/datasets_v1/20240303-2251/encoded_files')
+if not os.path.exists(f'data/datasets_v1/{date_str}/encoded_files'):
+    os.makedirs(f'data/datasets_v1/{date_str}/encoded_files')
 
 for i, example_filename in enumerate(example_files):
     print('loading dataset slice', i)
@@ -26,4 +27,4 @@ for i, example_filename in enumerate(example_files):
     # save the encoded test dataset
     z = np.array(encoded_test, dtype=np.int16)
     print('saving dataset slice', i)
-    np.save(f'data/datasets_v1/20240303-2251/encoded_files/encoded_data_slice_{str(i)}.npy', z)
+    np.save(f'data/datasets_v1/{date_str}/encoded_files/encoded_data_slice_{str(i)}.npy', z)

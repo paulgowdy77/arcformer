@@ -25,12 +25,12 @@ all_rule_names = [rule_filename.split('\\')[-1].split('.')[0] for rule_filename 
 print("rules:", len(all_rule_names))
 
 
-EXAMPLE_SETS = 800
+EXAMPLE_SETS = 500
 EXAMPLES_PER_SET = 4
 
 # pickle example sets
-for rulle in all_rule_names:
-    print("Generating: " + rulle)
+for i, rulle in enumerate(all_rule_names):
+    print("Generating: " + rulle + f" ({str(i)})")
     rule_filename = 'rules.' + rulle
     rule_module = importlib.import_module(rule_filename)
     config = rule_module.generate_config()
@@ -54,6 +54,8 @@ for rulle in all_rule_names:
 FLATTENED_EXAMPLE_SETS = []
 # load pickled example sets and process them
 for rule_name in all_rule_names:
+
+    print("flattening rule:", rule_name)
 
     with open(f'data/datasets_v1/{timestamp}/pickled_examples/{rule_name}_examples.pkl', 'rb') as f:
         example_sets = pickle.load(f)

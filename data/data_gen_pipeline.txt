@@ -1,0 +1,32 @@
+-- process_data_v1
+unpacks the 2d arrays, adds end of row, end of grid, and end of example tokens
+returns one long list of integers (raw pixels)
+
+-- create_dataset_v1_all
+reads over all rule files in a folder
+makes pickled examples
+then unpacks them all
+want to keep these seperate in case I want to change the unpacking, but not remake all the rule examples...
+this also splits the flattened examples into shuffled useable chunks (10k example sets each)
+
+then I need a tokenizer...
+these should be checked in
+the first one I made, on laptop was hidden in gitignore, so make sure these get checked in
+even though they are dataset linked
+
+-- create_bpe_merges_dataset
+points at a dataset (including the split files), creates merges 
+and saves them out
+
+-- arc_tokenizer
+needs one of the pickled merge files created by create_bpe_merges_dataset
+
+-- tokenize_dataset
+apply the tokenizer to the dataset
+create "encoded_data_slices", which are the same splits as above
+but now tokens - where each token is potentially many pixels+special chars 
+these encoded_data_slices are what the model will train on directly
+
+
+
+
