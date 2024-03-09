@@ -15,7 +15,7 @@ from training.model import GPTConfig, GPT
 # wandb logging
 wandb_log = True
 wandb_project = 'arcformer'
-wandb_run_name = 'arcformer_test_dev' # 'run' + str(time.time())
+wandb_run_name = 'arcformer_dev_'  + str(time.time())
 
 gradient_accumulation_steps = 5 * 8 # used to simulate larger batch sizes
 batch_size = 4 # if gradient_accumulation_steps > 1, this is the micro-batch size

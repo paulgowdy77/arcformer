@@ -4,12 +4,11 @@ import os
 from rule import Rule
 from plotter_utils import display_example_list
 
-rule_filename = 'rules.fill_stamp_reverse'
+rule_filename = 'rules.stamp_crop_and_copy_flip_colors'
 
 rule_module = importlib.import_module(rule_filename)
 config = rule_module.generate_config()
 example_func = rule_module.example_func()
-
 
 example_set = []
 
