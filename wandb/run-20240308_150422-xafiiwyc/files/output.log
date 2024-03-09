@@ -1,0 +1,7 @@
+C:\Users/paul/Documents/arcformer\training\model.py:64: UserWarning: 1Torch was not compiled with flash attention. (Triggered internally at ..\aten\src\ATen\native\transformers\cuda\sdp_utils.cpp:263.)
+  y = torch.nn.functional.scaled_dot_product_attention(q, k, v, attn_mask=None, dropout_p=self.dropout if self.training else 0, is_causal=True)
+Traceback (most recent call last):
+  File "C:\Users\paul\Documents\arcformer\training\train.py", line 161, in <module>
+    print(f"step {iter_num}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}")
+                                                                         ~~~~~~^^^^^^^
+KeyError: 'val'

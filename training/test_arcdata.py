@@ -1,10 +1,11 @@
 import sys
 sys.path.insert(1, 'C:/Users/paul/Documents/arcformer')
 
+from torch.utils.data import DataLoader
 from ArcDatasetV1 import ArcDatasetV1
 from data.arc_tokenizer import ArcTokenizer
 from data.plotter_utils import display_example_list
-from torch.utils.data import DataLoader
+
 
 
 #tokenizer = ArcTokenizer('data/datasets_v1/20240308-0920/processed_examples_bpe_MERGES.pkl')

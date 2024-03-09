@@ -1,0 +1,39 @@
+2024-03-08 21:03:12,260 INFO    StreamThr :21508 [internal.py:wandb_internal():86] W&B internal server running at pid: 21508, started at: 2024-03-08 21:03:12.259656
+2024-03-08 21:03:12,260 DEBUG   HandlerThread:21508 [handler.py:handle_request():146] handle_request: status
+2024-03-08 21:03:12,264 INFO    WriterThread:21508 [datastore.py:open_for_write():87] open: C:\Users\paul\Documents\arcformer\wandb\run-20240308_210312-wtqc5m4m\run-wtqc5m4m.wandb
+2024-03-08 21:03:12,264 DEBUG   SenderThread:21508 [sender.py:send():378] send: header
+2024-03-08 21:03:12,297 DEBUG   SenderThread:21508 [sender.py:send():378] send: run
+2024-03-08 21:03:12,603 INFO    SenderThread:21508 [dir_watcher.py:__init__():211] watching files in: C:\Users\paul\Documents\arcformer\wandb\run-20240308_210312-wtqc5m4m\files
+2024-03-08 21:03:12,604 INFO    SenderThread:21508 [sender.py:_start_run_threads():1099] run started: wtqc5m4m with start time 1709960592.260695
+2024-03-08 21:03:12,604 DEBUG   HandlerThread:21508 [handler.py:handle_request():146] handle_request: check_version
+2024-03-08 21:03:12,604 DEBUG   SenderThread:21508 [sender.py:send_request():405] send_request: check_version
+2024-03-08 21:03:12,717 DEBUG   HandlerThread:21508 [handler.py:handle_request():146] handle_request: run_start
+2024-03-08 21:03:12,737 DEBUG   HandlerThread:21508 [system_info.py:__init__():26] System info init
+2024-03-08 21:03:12,737 DEBUG   HandlerThread:21508 [system_info.py:__init__():41] System info init done
+2024-03-08 21:03:12,737 INFO    HandlerThread:21508 [system_monitor.py:start():194] Starting system monitor
+2024-03-08 21:03:12,737 INFO    SystemMonitor:21508 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-03-08 21:03:12,737 INFO    HandlerThread:21508 [system_monitor.py:probe():214] Collecting system info
+2024-03-08 21:03:12,744 INFO    SystemMonitor:21508 [interfaces.py:start():190] Started cpu monitoring
+2024-03-08 21:03:12,745 INFO    SystemMonitor:21508 [interfaces.py:start():190] Started disk monitoring
+2024-03-08 21:03:12,745 INFO    SystemMonitor:21508 [interfaces.py:start():190] Started gpu monitoring
+2024-03-08 21:03:12,758 INFO    SystemMonitor:21508 [interfaces.py:start():190] Started memory monitoring
+2024-03-08 21:03:12,768 INFO    SystemMonitor:21508 [interfaces.py:start():190] Started network monitoring
+2024-03-08 21:03:12,772 DEBUG   HandlerThread:21508 [system_info.py:probe():150] Probing system
+2024-03-08 21:03:12,773 DEBUG   HandlerThread:21508 [system_info.py:_probe_git():135] Probing git
+2024-03-08 21:03:12,835 DEBUG   HandlerThread:21508 [system_info.py:_probe_git():143] Probing git done
+2024-03-08 21:03:12,835 DEBUG   HandlerThread:21508 [system_info.py:probe():198] Probing system done
+2024-03-08 21:03:12,835 DEBUG   HandlerThread:21508 [system_monitor.py:probe():223] {'os': 'Windows-10-10.0.19045-SP0', 'python': '3.11.0', 'heartbeatAt': '2024-03-09T05:03:12.772329', 'startedAt': '2024-03-09T05:03:12.168113', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': 'C:\\Users\\paul\\Documents\\arcformer\\training\\train.py', 'codePathLocal': 'training\\train.py', 'codePath': 'training\\train.py', 'git': {'remote': 'https://github.com/paulgowdy77/arcformer.git', 'commit': '6f11cc1f0d70ccd3b5e11b45bf146b00714ca809'}, 'email': 'paulgamble100@gmail.com', 'root': 'C:/Users/paul/Documents/arcformer', 'host': 'DESKTOP-1G9MOTR', 'username': 'paul', 'executable': 'C:\\Users\\paul\\AppData\\Local\\Programs\\Python\\Python311\\python.exe', 'cpu_count': 10, 'cpu_count_logical': 20, 'cpu_freq': {'current': 2808.0, 'min': 0.0, 'max': 2808.0}, 'cpu_freq_per_core': [{'current': 2808.0, 'min': 0.0, 'max': 2808.0}], 'disk': {'/': {'total': 930.4526634216309, 'used': 838.6801071166992}}, 'gpu': 'NVIDIA GeForce GTX 1080', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce GTX 1080', 'memory_total': 8589934592}], 'memory': {'total': 31.922500610351562}}
+2024-03-08 21:03:12,835 INFO    HandlerThread:21508 [system_monitor.py:probe():224] Finished collecting system info
+2024-03-08 21:03:12,835 INFO    HandlerThread:21508 [system_monitor.py:probe():227] Publishing system info
+2024-03-08 21:03:12,836 INFO    HandlerThread:21508 [system_monitor.py:probe():229] Finished publishing system info
+2024-03-08 21:03:12,840 DEBUG   SenderThread:21508 [sender.py:send():378] send: files
+2024-03-08 21:03:12,840 INFO    SenderThread:21508 [sender.py:_save_file():1365] saving file wandb-metadata.json with policy now
+2024-03-08 21:03:12,891 DEBUG   HandlerThread:21508 [handler.py:handle_request():146] handle_request: python_packages
+2024-03-08 21:03:12,892 DEBUG   SenderThread:21508 [sender.py:send_request():405] send_request: python_packages
+2024-03-08 21:03:12,892 DEBUG   HandlerThread:21508 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-08 21:03:12,892 DEBUG   SenderThread:21508 [sender.py:send_request():405] send_request: stop_status
+2024-03-08 21:03:12,893 DEBUG   HandlerThread:21508 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-08 21:03:13,099 DEBUG   SenderThread:21508 [sender.py:send():378] send: telemetry
+2024-03-08 21:03:13,606 INFO    wandb-upload_0:21508 [upload_job.py:push():131] Uploaded file C:\Users\paul\AppData\Local\Temp\tmp750hol08wandb\2b4yddit-wandb-metadata.json
+2024-03-08 21:03:13,619 INFO    Thread-16 :21508 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\paul\Documents\arcformer\wandb\run-20240308_210312-wtqc5m4m\files\wandb-metadata.json
+2024-03-08 21:03:13,619 INFO    Thread-16 :21508 [dir_watcher.py:_on_file_created():271] file/dir created: C:\Users\paul\Documents\arcformer\wandb\run-20240308_210312-wtqc5m4m\files\requirements.txt

@@ -1,0 +1,28 @@
+C:\Users/paul/Documents/arcformer\training\model.py:64: UserWarning: 1Torch was not compiled with flash attention. (Triggered internally at ..\aten\src\ATen\native\transformers\cuda\sdp_utils.cpp:263.)
+  y = torch.nn.functional.scaled_dot_product_attention(q, k, v, attn_mask=None, dropout_p=self.dropout if self.training else 0, is_causal=True)
+step 0: train loss 5.5517
+iter 0: loss 5.5559, time 239801.79ms, mfu -100.00%
+iter 1: loss 5.5572, time 70927.68ms, mfu -100.00%
+iter 2: loss 5.5225, time 70073.44ms, mfu -100.00%
+Traceback (most recent call last):
+  File "C:\Users\paul\Documents\arcformer\training\train.py", line 199, in <module>
+    X, Y = get_batch()
+           ^^^^^^^^^^^
+  File "C:\Users\paul\Documents\arcformer\training\train.py", line 124, in get_batch
+    x, y = next(iter(train_dataloader))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\paul\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\utils\data\dataloader.py", line 631, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\paul\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\utils\data\dataloader.py", line 674, in _next_data
+    index = self._next_index()  # may raise StopIteration
+            ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\paul\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\utils\data\dataloader.py", line 621, in _next_index
+    return next(self._sampler_iter)  # may raise StopIteration
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\paul\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\utils\data\sampler.py", line 287, in __iter__
+    for idx in self.sampler:
+  File "C:\Users\paul\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\utils\data\sampler.py", line 167, in __iter__
+    yield from torch.randperm(n, generator=generator).tolist()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

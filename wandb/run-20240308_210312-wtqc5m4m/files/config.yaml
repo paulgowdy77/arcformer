@@ -1,0 +1,124 @@
+wandb_version: 1
+
+wandb_log:
+  desc: null
+  value: true
+wandb_project:
+  desc: null
+  value: arcformer
+wandb_run_name:
+  desc: null
+  value: arcformer_test_dev
+gradient_accumulation_steps:
+  desc: null
+  value: 40
+batch_size:
+  desc: null
+  value: 4
+block_size:
+  desc: null
+  value: 2048
+n_layer:
+  desc: null
+  value: 16
+n_head:
+  desc: null
+  value: 16
+n_embd:
+  desc: null
+  value: 512
+bias:
+  desc: null
+  value: false
+dropout:
+  desc: null
+  value: 0.0
+learning_rate:
+  desc: null
+  value: 0.0006
+max_iters:
+  desc: null
+  value: 5000
+weight_decay:
+  desc: null
+  value: 0.1
+beta1:
+  desc: null
+  value: 0.9
+beta2:
+  desc: null
+  value: 0.95
+grad_clip:
+  desc: null
+  value: 1.0
+decay_lr:
+  desc: null
+  value: true
+warmup_iters:
+  desc: null
+  value: 200
+lr_decay_iters:
+  desc: null
+  value: 600000
+min_lr:
+  desc: null
+  value: 6.0e-05
+device:
+  desc: null
+  value: cuda
+dtype:
+  desc: null
+  value: float16
+iter_num:
+  desc: null
+  value: 0
+best_val_loss:
+  desc: null
+  value: 1000000000.0
+master_process:
+  desc: null
+  value: true
+eval_interval:
+  desc: null
+  value: 4
+log_interval:
+  desc: null
+  value: 1
+out_dir:
+  desc: null
+  value: out
+device_type:
+  desc: null
+  value: cuda
+_wandb:
+  desc: null
+  value:
+    python_version: 3.11.0
+    cli_version: 0.16.4
+    framework: huggingface
+    huggingface_version: 4.38.2
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1709960592.0
+    t:
+      1:
+      - 1
+      - 11
+      - 49
+      - 55
+      2:
+      - 1
+      - 11
+      - 49
+      - 55
+      3:
+      - 13
+      - 16
+      - 23
+      4: 3.11.0
+      5: 0.16.4
+      6: 4.38.2
+      8:
+      - 3
+      - 5
+      13: windows-amd64
