@@ -63,11 +63,9 @@ device_type = 'cuda' if 'cuda' in device else 'cpu' # for later use in torch.aut
 ptdtype = {'float32': torch.float32, 'bfloat16': torch.bfloat16, 'float16': torch.float16}[dtype]
 ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=device_type, dtype=ptdtype)
 
-
-
+# data
 train_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240308-0920/encoded_files")
 train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-
 
 val_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240309-1309/encoded_files")
 val_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
