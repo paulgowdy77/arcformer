@@ -181,8 +181,6 @@ while True:
         #         }
         #         print(f"saving checkpoint to {out_dir}")
         #         torch.save(checkpoint, os.path.join(out_dir, 'ckpt.pt'))
-    # if iter_num == 0 and eval_only:
-    #     break
 
     # forward backward update, with optional gradient accumulation to simulate larger batch size
     # and using the GradScaler if data type is float16
@@ -214,6 +212,7 @@ while True:
     t1 = time.time()
     dt = t1 - t0
     t0 = t1
+
     if iter_num % log_interval == 0 and master_process:
         # get loss as float. note: this is a CPU-GPU sync point
         # scale up to undo the division above, approximating the true total loss (exact would have been a sum)
