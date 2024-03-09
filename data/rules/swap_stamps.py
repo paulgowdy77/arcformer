@@ -19,8 +19,8 @@ def generate_stamp(bg_color, fg_color, stamp_size):
 
 def generate_example(config):
 
-    height = random.randint(14, 22)
-    width = random.randint(14, 22)
+    height = random.randint(18, 24)
+    width = random.randint(18, 24)
 
     colors = random.sample(range(0, 9), 3)
     input = np.ones((height, width)) * colors[0]
@@ -30,8 +30,8 @@ def generate_example(config):
     stamp_A = generate_stamp(colors[0], colors[1], stamp_size)
     stamp_B = generate_stamp(colors[0], colors[2], stamp_size)
 
-    stamp_A_count = random.randint(2, 4)
-    stamp_B_count = random.randint(2, 4)
+    stamp_A_count = random.randint(1, 4)
+    stamp_B_count = random.randint(1, 4)
 
     # generate all stamp locations together
     # avoid any overlap

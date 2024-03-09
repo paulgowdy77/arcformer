@@ -5,6 +5,7 @@ import os
 import torch
 import wandb
 import time
+import datetime
 import math
 from contextlib import nullcontext
 
@@ -15,15 +16,16 @@ from training.model import GPTConfig, GPT
 # wandb logging
 wandb_log = True
 wandb_project = 'arcformer'
-wandb_run_name = 'arcformer_dev_'  + str(time.time())
+date_time = datetime.now().strftime("%m_%d_%Y_%H:%M:%S")
+wandb_run_name = 'arcformer_dev_'  + date_time
 
-gradient_accumulation_steps = 5 * 8 # used to simulate larger batch sizes
-batch_size = 4 # if gradient_accumulation_steps > 1, this is the micro-batch size
+gradient_accumulation_steps = 5 * 4 # used to simulate larger batch sizes
+batch_size = 2 # if gradient_accumulation_steps > 1, this is the micro-batch size
 block_size = 2048
 # model
-n_layer = 16
-n_head = 16
-n_embd = 512
+n_layer = 8
+n_head = 8
+n_embd = 256
 bias = False
 dropout = 0.0
 
@@ -61,8 +63,21 @@ device_type = 'cuda' if 'cuda' in device else 'cpu' # for later use in torch.aut
 ptdtype = {'float32': torch.float32, 'bfloat16': torch.bfloat16, 'float16': torch.float16}[dtype]
 ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=device_type, dtype=ptdtype)
 
+
+
 train_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240308-0920/encoded_files")
 train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+
+
+val_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240309-1309/encoded_files")
+val_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+
+DATALOADER_SPLITS = {
+    'train': train_dataloader,
+    'val': val_dataloader,
+    'test': None
+}
+
 
 config_keys = [k for k,v in globals().items() if not k.startswith('_') and isinstance(v, (int, float, bool, str))]
 #exec(open('configurator.py').read()) # overrides from command line or config file
@@ -99,16 +114,33 @@ checkpoint = None # free up memory
 def estimate_loss():
     out = {}
     model.eval()
-    for split in ['train']:
+    #for split in ['train']:
+    for split, loader in DATALOADER_SPLITS.items():
+        if loader is None:
+            continue
         losses = torch.zeros(10)
         for k in range(10):
-            X, Y = get_batch()
+            X, Y = get_batch(loader)
             with ctx:
                 logits, loss = model(X, Y)
             losses[k] = loss.item()
         out[split] = losses.mean()
     model.train()
     return out
+
+# def estimate_loss():
+#     out = {}
+#     model.eval()
+#     for split in ['train']:
+#         losses = torch.zeros(10)
+#         for k in range(10):
+#             X, Y = get_batch()
+#             with ctx:
+#                 logits, loss = model(X, Y)
+#             losses[k] = loss.item()
+#         out[split] = losses.mean()
+#     model.train()
+#     return out
 
 # learning rate decay scheduler (cosine with warmup)
 def get_lr(it):
@@ -128,8 +160,8 @@ def get_lr(it):
     
 wandb.init(project=wandb_project, name=wandb_run_name, config=config)
 
-def get_batch():
-    x, y = next(iter(train_dataloader))
+def get_batch(dataloader):
+    x, y = next(iter(dataloader))
     if device_type == 'cuda':
         # pin arrays x,y, which allows us to move them to GPU asynchronously (non_blocking=True)
         x, y = x.pin_memory().to(device, non_blocking=True), y.pin_memory().to(device, non_blocking=True)
@@ -138,7 +170,7 @@ def get_batch():
     return x, y
 
 # training loop
-X, Y = get_batch()
+X, Y = get_batch(train_dataloader)
 t0 = time.time()
 local_iter_num = 0 # number of iterations in the lifetime of this process
 raw_model = model # unwrap DDP container if needed
@@ -159,15 +191,21 @@ while True:
     # evaluate the loss on train/val sets and write checkpoints
     if iter_num % eval_interval == 0 and master_process:
         losses = estimate_loss()
-        print(f"step {iter_num}: train loss {losses['train']:.4f}") #, val loss {losses['val']:.4f}")
-        if wandb_log:
-            wandb.log({
+        #print(f"step {iter_num}: train loss {losses['train']:.4f}") #, val loss {losses['val']:.4f}")
+        
+        log_obj = {
                 "iter": iter_num,
-                "train/loss": losses['train'],
-                #"val/loss": losses['val'],
                 "lr": lr,
-                "mfu": running_mfu*100, # convert to percentage
-            })
+                "mfu": running_mfu*100,
+        }
+
+        print("eval iter:", iter_num)
+        for k, v in losses.items():
+            print(f"{k} loss: {v:.4f}")
+            log_obj[f"{k}_loss"] = v
+
+        if wandb_log:
+            wandb.log(log_obj)
         # if True: # losses['val'] < best_val_loss:# or always_save_checkpoint:
         #     #best_val_loss = losses['val']
         #     if iter_num > 0:
@@ -195,7 +233,7 @@ while True:
             logits, loss = model(X, Y)
             loss = loss / gradient_accumulation_steps # scale the loss to account for gradient accumulation
         # immediately async prefetch next batch while model is doing the forward pass on the GPU
-        X, Y = get_batch()
+        X, Y = get_batch(train_dataloader)
         # backward pass, with gradient scaling if training in fp16
         scaler.scale(loss).backward()
     # clip the gradient

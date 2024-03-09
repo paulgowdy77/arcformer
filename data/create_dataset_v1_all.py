@@ -25,7 +25,7 @@ all_rule_names = [rule_filename.split('\\')[-1].split('.')[0] for rule_filename 
 print("rules:", len(all_rule_names))
 
 
-EXAMPLE_SETS = 500
+EXAMPLE_SETS = 50
 EXAMPLES_PER_SET = 4
 
 # pickle example sets
