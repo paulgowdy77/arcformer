@@ -9,10 +9,10 @@ def generate_config():
 
         'nb_examples': 4,
 
-        'min_height': 18,
-        'max_height': 20,
-        'min_width': 18,
-        'max_width': 20,
+        'min_height': 20,
+        'max_height': 24,
+        'min_width': 20,
+        'max_width': 24,
 
         'colors': random.sample(range(0,9), 3)
     }
@@ -66,6 +66,7 @@ def generate_example(config):
         box_left = random.randint(0, width - box_width)
 
         while not check_overlap_margin_1(boxes, box_top, box_left, box_height, box_width):
+            #print("overlapping")
             box_height = random.randint(3, 4)
             box_width = random.randint(2, 5)
 

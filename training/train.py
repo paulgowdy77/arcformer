@@ -1,11 +1,11 @@
 import sys
-sys.path.insert(1, 'C:/Users/paul/Documents/arcformer')
+sys.path.insert(1, '/home/paul/Documents/arcformer')
 
 import os
 import torch
 import wandb
 import time
-import datetime
+from datetime import datetime
 import math
 from contextlib import nullcontext
 
@@ -19,13 +19,13 @@ wandb_project = 'arcformer'
 date_time = datetime.now().strftime("%m_%d_%Y_%H:%M:%S")
 wandb_run_name = 'arcformer_dev_'  + date_time
 
-gradient_accumulation_steps = 5 * 4 # used to simulate larger batch sizes
-batch_size = 2 # if gradient_accumulation_steps > 1, this is the micro-batch size
+gradient_accumulation_steps = 5 * 8 # used to simulate larger batch sizes
+batch_size = 4 # if gradient_accumulation_steps > 1, this is the micro-batch size
 block_size = 2048
 # model
-n_layer = 8
-n_head = 8
-n_embd = 256
+n_layer = 16
+n_head = 16
+n_embd = 512
 bias = False
 dropout = 0.0
 
@@ -64,10 +64,10 @@ ptdtype = {'float32': torch.float32, 'bfloat16': torch.bfloat16, 'float16': torc
 ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=device_type, dtype=ptdtype)
 
 # data
-train_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240308-0920/encoded_files")
+train_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240309-1950/encoded_files")
 train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
-val_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240309-1309/encoded_files")
+val_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240310-0722/encoded_files")
 val_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
 DATALOADER_SPLITS = {

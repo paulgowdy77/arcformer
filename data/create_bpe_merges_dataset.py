@@ -2,7 +2,7 @@ import pickle
 import matplotlib.pyplot as plt
 import glob
 
-date = '20240308-0920'
+date = '20240309-1950'
 TARGET_VOCAB_SIZE = 256 # the desired final vocabulary size
 
 processed_examples_files = glob.glob(f'data/datasets_v1/{date}/processed_examples/*.pkl')

@@ -8,7 +8,7 @@ class ArcTokenizer:
             vocab_and_merges = pickle.load(f)
 
         self.merges = vocab_and_merges['merges']
-        self.initial_token_count = vocab_and_merges['token_count']
+        self.initial_token_count = vocab_and_merges['initial_token_count']
 
         self.vocab = {idx: idx for idx in range(self.initial_token_count)}
         for (p0, p1), idx in self.merges.items():
