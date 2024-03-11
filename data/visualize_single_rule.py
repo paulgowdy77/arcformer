@@ -4,7 +4,7 @@ import os
 from rule import Rule
 from plotter_utils import display_example_list
 
-rule_filename = 'rules.extend_lines_skip_color'
+rule_filename = 'rules.lock_and_key'
 
 rule_module = importlib.import_module(rule_filename)
 config = rule_module.generate_config()
