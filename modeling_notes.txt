@@ -33,3 +33,5 @@ treat these tokens as word tokens
 do byte pair encoding
 see how far I get...
 
+ok, I have the naive approach implemented
+to start, make it overfit

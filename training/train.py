@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(1, 'C:/Users/paul/Documents/arcformer')
+sys.path.insert(1, '/home/paul/Documents/arcformer')
 
 import os
 import torch
@@ -64,10 +64,10 @@ ptdtype = {'float32': torch.float32, 'bfloat16': torch.bfloat16, 'float16': torc
 ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=device_type, dtype=ptdtype)
 
 # data
-train_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240308-0920/encoded_files")
+train_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240309-1950/encoded_files")
 train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
-val_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240309-1309/encoded_files")
+val_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240310-0722/encoded_files")
 val_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
 DATALOADER_SPLITS = {

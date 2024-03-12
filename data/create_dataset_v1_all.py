@@ -28,10 +28,18 @@ print("rules:", len(all_rule_names))
 EXAMPLE_SETS = 50
 EXAMPLES_PER_SET = 4
 
+# split into workable size
+split_size = 10000
+
+
+
 # pickle example sets
 for i, rulle in enumerate(all_rule_names):
     print("Generating: " + rulle + f" ({str(i)})")
-    rule_filename = 'rules.' + rulle
+    #rule_filename = 'rules.' + rulle
+    rule_filename = rulle.replace('/', '.').replace('\\', '.').replace('.py', '')
+    rule_filename = rule_filename.replace('data.', '')
+    #print("rule_filename:", rule_filename)
     rule_module = importlib.import_module(rule_filename)
     config = rule_module.generate_config()
     example_func = rule_module.example_func()
@@ -55,6 +63,8 @@ FLATTENED_EXAMPLE_SETS = []
 # load pickled example sets and process them
 for rule_name in all_rule_names:
 
+    
+    rule_name = rule_name.split('/')[-1]
     print("flattening rule:", rule_name)
 
     with open(f'data/datasets_v1/{timestamp}/pickled_examples/{rule_name}_examples.pkl', 'rb') as f:
@@ -76,8 +86,7 @@ random.shuffle(FLATTENED_EXAMPLE_SETS)
 print("Number of example sets:", len(FLATTENED_EXAMPLE_SETS))
 print("total pixels in all example sets:", sum([len(example_set) for example_set in FLATTENED_EXAMPLE_SETS]))
 
-# split into workable size
-split_size = 10000
+
 split_sets = [FLATTENED_EXAMPLE_SETS[i:i + split_size] for i in range(0, len(FLATTENED_EXAMPLE_SETS), split_size)]
 
 # write the processed examples to a file
