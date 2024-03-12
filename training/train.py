@@ -126,20 +126,6 @@ def estimate_loss():
     model.train()
     return out
 
-# def estimate_loss():
-#     out = {}
-#     model.eval()
-#     for split in ['train']:
-#         losses = torch.zeros(10)
-#         for k in range(10):
-#             X, Y = get_batch()
-#             with ctx:
-#                 logits, loss = model(X, Y)
-#             losses[k] = loss.item()
-#         out[split] = losses.mean()
-#     model.train()
-#     return out
-
 # learning rate decay scheduler (cosine with warmup)
 def get_lr(it):
     # 1) linear warmup for warmup_iters steps
@@ -153,9 +139,7 @@ def get_lr(it):
     assert 0 <= decay_ratio <= 1
     coeff = 0.5 * (1.0 + math.cos(math.pi * decay_ratio)) # coeff ranges 0..1
     return min_lr + coeff * (learning_rate - min_lr)
-
-
-    
+ 
 wandb.init(project=wandb_project, name=wandb_run_name, config=config)
 
 def get_batch(dataloader):
@@ -173,11 +157,6 @@ t0 = time.time()
 local_iter_num = 0 # number of iterations in the lifetime of this process
 raw_model = model # unwrap DDP container if needed
 running_mfu = -1.0
-
-
-
-
-
 
 while True:
 
