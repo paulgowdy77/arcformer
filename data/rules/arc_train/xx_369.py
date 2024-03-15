@@ -7,7 +7,7 @@ def generate_config():
     #colors = random.sample(range(0, 9), 2)
 
     config = {
-        "fixed_colors": random.sample(range(0, 9), 2)
+        "fixed_colors": random.sample(range(0, 9), 5)
     }
 
     return config
@@ -16,28 +16,92 @@ def generate_config():
 def generate_example(config):
 
     fixed_colors = config['fixed_colors']
-    nb_colors = random.randint(2, 4)
-    # sample colors not in fixed_colors
-    colors = random.sample([c for c in range(9) if c not in fixed_colors], nb_colors)
+    background_color = fixed_colors[0]
 
-    height = random.randint(10, 20)
-    width = random.randint(10, 20)
+    height = random.randint(16, 22)
+    width = random.randint(16, 22)
 
-    input = np.ones((height, width), dtype=int) * fixed_colors[0]
-    output = np.ones((height, width), dtype=int) * fixed_colors[0]
+    input = np.ones((height, width), dtype=int) * background_color
+    output = np.ones((height, width), dtype=int) * background_color
 
-    for i, color in enumerate(colors):
-        spot_size = i+1
+    # find three adjact pixels with only background color adjacent to them
 
-        # create spots of spot_size pixels that DO NOT touch any other dot
-        for _ in range(spot_size):
-            x = random.randint(0, width-1)
-            y = random.randint(0, height-1)
-            while input[y, x] != fixed_colors[0] or any([x < x2 + 2 and x + 2 > x2 and y < y2 + 2 and y + 2 > y2 for x2, y2 in zip(*np.where(input == color))]):
-                x = random.randint(0, width-1)
-                y = random.randint(0, height-1)
-            input[y, x] = color
+    nb_three_shapes = random.randint(2, 5)
+    for px in range(nb_three_shapes):
+        isolated_position = False
+        while not isolated_position:
+            x = random.randint(1, width-2)
+            y = random.randint(1, height-2)
 
+            # check all pixels within 2 pixels of the current pixel
+            all_adjacent = input[y-2:y+2, x-2:x+2]
+            if np.any(all_adjacent != background_color):
+                continue
+
+            isolated_position = True
+
+        # create 3 adjacent pixels
+        three_shape = random.choice([1,2,3])
+        if three_shape == 1:
+            input[y, x] = fixed_colors[1]
+            input[y, x+1] = fixed_colors[1]
+            input[y, x-1] = fixed_colors[1]
+
+            output[y, x] = fixed_colors[2]
+            output[y, x+1] = fixed_colors[2]
+            output[y, x-1] = fixed_colors[2]
+
+        if three_shape == 2:
+            input[y, x] = fixed_colors[1]
+            input[y+1, x] = fixed_colors[1]
+            input[y-1, x] = fixed_colors[1]
+
+            output[y, x] = fixed_colors[2]
+            output[y+1, x] = fixed_colors[2]
+            output[y-1, x] = fixed_colors[2]
+
+        if three_shape == 3:
+            input[y, x] = fixed_colors[1]
+            input[y+1, x] = fixed_colors[1]
+            input[y+1, x-1] = fixed_colors[1]
+
+            output[y, x] = fixed_colors[2]
+            output[y+1, x] = fixed_colors[2]
+            output[y+1, x-1] = fixed_colors[2]
+
+
+    nb_two_shapes = random.randint(3, 6)
+    for px in range(nb_two_shapes):
+        isolated_position = False
+        while not isolated_position:
+            x = random.randint(1, width-2)
+            y = random.randint(1, height-2)
+
+            # check all pixels within 2 pixels of the current pixel
+            all_adjacent = input[y-2:y+2, x-2:x+2]
+            if np.any(all_adjacent != background_color):
+                continue
+
+            isolated_position = True
+
+        # create 3 adjacent pixels
+        two_shape = random.choice([1,2])
+        if three_shape == 1:
+            input[y, x] = fixed_colors[1]
+            input[y, x+1] = fixed_colors[1]
+
+            output[y, x] = fixed_colors[3]
+            output[y, x+1] = fixed_colors[3]
+           
+        if three_shape == 2:
+            input[y, x] = fixed_colors[1]
+            input[y+1, x] = fixed_colors[1]
+
+            output[y, x] = fixed_colors[3]
+            output[y+1, x] = fixed_colors[3]
+          
+
+    
 
     return input, output
 
