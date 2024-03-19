@@ -4,7 +4,7 @@ import os
 from rule import Rule
 from plotter_utils import display_example_list
 
-rule_filename = 'rules.arc_train.87'
+rule_filename = 'rules.arc_train.241'
 
 rule_module = importlib.import_module(rule_filename)
 config = rule_module.generate_config()
