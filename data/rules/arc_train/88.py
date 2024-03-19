@@ -1,7 +1,7 @@
 import numpy as np
 import random
 
-# ARC Public training set 117
+# ARC Public training set 88
 
 def generate_config():
     #colors = random.sample(range(0, 9), 2)
