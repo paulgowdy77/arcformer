@@ -7,7 +7,7 @@ def generate_config():
     #colors = random.sample(range(0, 9), 2)
 
     config = {
-        "fixed_colors": random.sample(range(0, 9), 5)
+        'nb_rotations': random.randint(0, 3)
     }
 
     return config
@@ -17,44 +17,22 @@ def generate_config():
 
 def generate_example(config):
 
-    colors = config["fixed_colors"]
-    height = random.randint(12, 22)
-    width = random.randint(12, 22)
+    colors = random.sample(range(0, 9), 6)
 
-    input = np.ones((height, width), dtype=int) * colors[0]
-    output = np.ones((height, width), dtype=int) * colors[0]
+    dim = random.randint(3,5)
+    input = np.ones((dim, dim), dtype=int) * colors[0]
+    output = np.ones((dim, dim), dtype=int) * colors[0]
+
+    for i in range(dim):
+        height = random.randint(0, dim-1)
+
+        input[i, height] = colors[i+1]
+        output[i, :height+1] = colors[i+1]
 
     
-
-
-    max_nb_rectangles = random.randint(2,5)
-
-    placement_attempts = 0
-    nb_rectangles = 0
-
-    while placement_attempts < 50 and nb_rectangles < max_nb_rectangles:
-        rect_width = random.randint(2, 6)
-        rect_height = random.randint(2, 6)
-
-        x = random.randint(0, width - rect_width)
-        y = random.randint(0, height - rect_height)
-
-        if np.any(input[y:y+rect_height, x:x+rect_width] != colors[0]):
-            placement_attempts += 1
-            continue
-
-        input[y:y+rect_height, x:x+rect_width] = colors[1]
-
-        # output has a unique pattern
-        output[y, x] = colors[2]
-        output[y, x+rect_width-1] = colors[2]
-        output[y+rect_height-1, x] = colors[2]
-        output[y+rect_height-1, x+rect_width-1] = colors[2]
-
-        output[y+1:y+rect_height-1, x+1:x+rect_width-1] = colors[3]
-
-        nb_rectangles += 1
-
+    nb_rotations = config['nb_rotations']
+    input = np.rot90(input, nb_rotations)
+    output = np.rot90(output, nb_rotations)
 
     return input, output
 
