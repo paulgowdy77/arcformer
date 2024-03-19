@@ -38,7 +38,6 @@ def generate_example(config):
     rect_shapes = [rect_shapes[0]] + [x for x in rect_shapes if x[0] != min_area]
     # reverse sort
     rect_shapes = rect_shapes[::-1]
-    print(rect_shapes)
     input = np.ones((width, height), dtype=int) * colors[0]
 
     for i, rect in enumerate(rect_shapes):
