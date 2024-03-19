@@ -53,8 +53,6 @@ def generate_example(config):
 
     return input, output
 
-    return input, output
-
 
 
 def example_func():
