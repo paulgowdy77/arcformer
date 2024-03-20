@@ -8,13 +8,14 @@ import time
 from datetime import datetime
 import math
 from contextlib import nullcontext
+import numpy as np
 
-from torch.utils.data import DataLoader
-from ArcDatasetV1 import ArcDatasetV1
+#from torch.utils.data import DataLoader
+from ArcDatasetV1 import ArcDatasetV1, ARCDataLoader
 from training.model import GPTConfig, GPT
 
 # wandb logging
-wandb_log = True
+wandb_log = False
 wandb_project = 'arcformer'
 date_time = datetime.now().strftime("%m_%d_%Y_%H:%M:%S")
 wandb_run_name = 'arcformer_dev_'  + date_time
@@ -64,11 +65,20 @@ ptdtype = {'float32': torch.float32, 'bfloat16': torch.bfloat16, 'float16': torc
 ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=device_type, dtype=ptdtype)
 
 # data
-train_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240309-1950/encoded_files")
-train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+train_dataset = ArcDatasetV1(
+    encoded_example_dir="data/datasets_v1/20240309-1950/encoded_files", 
+    device=device, 
+    device_type=device_type)
+train_dataloader = ARCDataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
-val_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240310-0722/encoded_files")
-val_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+val_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240310-0722/encoded_files", 
+    device=device, 
+    device_type=device_type)
+val_dataloader = ARCDataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+
+
+
+
 
 DATALOADER_SPLITS = {
     'train': train_dataloader,
@@ -140,15 +150,28 @@ def get_lr(it):
     coeff = 0.5 * (1.0 + math.cos(math.pi * decay_ratio)) # coeff ranges 0..1
     return min_lr + coeff * (learning_rate - min_lr)
  
-wandb.init(project=wandb_project, name=wandb_run_name, config=config)
+if wandb_log:
+    wandb.init(project=wandb_project, name=wandb_run_name, config=config)
+
+
+# X = torch.ones((2, 2048), dtype=torch.int64).to(device)
+# Y = torch.ones((2, 2048), dtype=torch.int64).to(device)
 
 def get_batch(dataloader):
-    x, y = next(iter(dataloader))
-    if device_type == 'cuda':
+    # x, y = next(iter(dataloader))
+    x, y = dataloader.get_batch()
+    # x = np.random.randint(0, 256, (2, 2048))
+    # y = np.random.randint(0, 256, (2, 2048))
+
+    # x = torch.from_numpy(x).to(device)
+    # y = torch.from_numpy(y).to(device)
+    if self.device_type == 'cuda':
         # pin arrays x,y, which allows us to move them to GPU asynchronously (non_blocking=True)
-        x, y = x.pin_memory().to(device, non_blocking=True), y.pin_memory().to(device, non_blocking=True)
+        x, y = x.pin_memory().to(self.device, non_blocking=True), y.pin_memory().to(self.device, non_blocking=True)
     else:
-        x, y = x.to(device), y.to(device)
+        x = torch.from_numpy(x).to(device)
+        y = torch.from_numpy(y).to(device)
+    
     return x, y
 
 # training loop
