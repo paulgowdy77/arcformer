@@ -13,6 +13,7 @@ class ArcDatasetV1:
         self.data = []
         print("Loading data slices...")
         for file in self.encoded_example_files:
+            print(file)
             loaded_array = np.load(file)
             self.data.append(loaded_array)
 
