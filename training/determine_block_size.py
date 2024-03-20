@@ -18,24 +18,27 @@ train_dataset = ArcDatasetV1(
 train_dataloader = ARCDataLoader(train_dataset, batch_size=2, shuffle=True)
 
 
-x_batch, y_batch = train_dataloader.get_batch()
+
+for sample in range(10):
+    x_batch, y_batch = train_dataloader.get_batch()
 
 
-x = x_batch[0]
-print(x.shape)
+    x = x_batch[0]
+    #print(x.shape)
 
-decoded_x = tokenizer.decode(x)
+    decoded_x = tokenizer.decode(x)
 
-print(len(decoded_x))
+    #print(len(decoded_x))
 
-unique_tokens = set(decoded_x) 
+    unique_tokens = set(decoded_x) 
 
-counts = {}
-for token in unique_tokens:
-    counts[token] = decoded_x.count(token)
+    counts = {}
+    for token in unique_tokens:
+        counts[token] = decoded_x.count(token)
 
-for token, count in counts.items():
-    print(token, count)
+    # for token, count in counts.items():
+    #     print(token, count)
+    print(counts[14])
 
 
 # def split_list(llist, split_token):

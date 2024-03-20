@@ -15,18 +15,18 @@ from ArcDatasetV1 import ArcDatasetV1, ARCDataLoader
 from training.model import GPTConfig, GPT
 
 # wandb logging
-wandb_log = False
+wandb_log = True
 wandb_project = 'arcformer'
 date_time = datetime.now().strftime("%m_%d_%Y_%H:%M:%S")
 wandb_run_name = 'arcformer_dev_'  + date_time
 
 gradient_accumulation_steps = 5 * 8 # used to simulate larger batch sizes
 batch_size = 2 # if gradient_accumulation_steps > 1, this is the micro-batch size
-block_size = 2048
+block_size = 1024
 # model
-n_layer = 16
-n_head = 16
-n_embd = 512
+n_layer = 64
+n_head = 64
+n_embd = 1024
 bias = False
 dropout = 0.0
 
@@ -67,11 +67,13 @@ ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=
 # data
 train_dataset = ArcDatasetV1(
     encoded_example_dir="data/datasets_v1/20240309-1950/encoded_files", 
+    block_size=block_size,
     device=device, 
     device_type=device_type)
 train_dataloader = ARCDataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
 val_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240310-0722/encoded_files", 
+    block_size=block_size,
     device=device, 
     device_type=device_type)
 val_dataloader = ARCDataLoader(train_dataset, batch_size=batch_size, shuffle=True)
@@ -163,14 +165,14 @@ def get_batch(dataloader):
     # x = np.random.randint(0, 256, (2, 2048))
     # y = np.random.randint(0, 256, (2, 2048))
 
-    # x = torch.from_numpy(x).to(device)
-    # y = torch.from_numpy(y).to(device)
-    if self.device_type == 'cuda':
+    x = torch.from_numpy(x)
+    y = torch.from_numpy(y)
+    if device_type == 'cuda':
         # pin arrays x,y, which allows us to move them to GPU asynchronously (non_blocking=True)
-        x, y = x.pin_memory().to(self.device, non_blocking=True), y.pin_memory().to(self.device, non_blocking=True)
+        x, y = x.pin_memory().to(device, non_blocking=True), y.pin_memory().to(device, non_blocking=True)
     else:
-        x = torch.from_numpy(x).to(device)
-        y = torch.from_numpy(y).to(device)
+        x = x.to(device)
+        y = y.to(device)
     
     return x, y
 
