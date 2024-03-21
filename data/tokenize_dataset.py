@@ -4,9 +4,10 @@ import numpy as np
 import glob
 import os
 
-date_str = "20240310-0722"
+date_str = "train_set_1"
+vocab_merge_path = 'data/vocab_merges_v1/train_set_1_processed_examples_bpe_MERGES.pkl'
 
-tokenizer = ArcTokenizer(f'data/datasets_v1/{date_str}/processed_examples_bpe_MERGES.pkl')
+tokenizer = ArcTokenizer(vocab_merge_path)
 
 example_files = glob.glob(f'data/datasets_v1/{date_str}/processed_examples/*.pkl')
 print("example files:", len(example_files))

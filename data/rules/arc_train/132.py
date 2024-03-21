@@ -15,14 +15,14 @@ def generate_config():
 def generate_example(config):
 
     colors = random.sample(range(0, 9), 5)
-    height = random.randint(12, 20)
-    width = random.randint(12, 20)
+    height = random.randint(16, 22)
+    width = random.randint(16, 22)
 
     input = np.ones((height, width), dtype=int) * colors[0]
     output = np.ones((height, width), dtype=int) * colors[0]
 
     # place non overlapping rectangles
-    nb_rectangles = random.randint(1, 4)
+    nb_rectangles = random.randint(1, 3)
     for i in range(nb_rectangles):
         rect_height = random.randint(2, 6)
         rect_width = random.randint(2, 6)

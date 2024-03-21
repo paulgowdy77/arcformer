@@ -2,7 +2,7 @@ import pickle
 import matplotlib.pyplot as plt
 import glob
 
-date = '20240309-1950'
+date = 'train_set_1'
 TARGET_VOCAB_SIZE = 256 # the desired final vocabulary size
 
 processed_examples_files = glob.glob(f'data/datasets_v1/{date}/processed_examples/*.pkl')
@@ -62,7 +62,7 @@ plt.figure()
 plt.plot(collect_text_length)
 plt.show()
 
-with open(f'data/datasets_v1/{date}/processed_examples_bpe_MERGES.pkl', 'wb') as f:
+with open(f'data/datasets_v1/{date}/{date}_processed_examples_bpe_MERGES.pkl', 'wb') as f:
     pickle.dump({
         "merges": merges,
         "initial_token_count": token_count,
