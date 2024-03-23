@@ -50,8 +50,8 @@ def sample_data(data):
 
 x, y, yy = sample_data(test_data)
 
-print(x[:20])
-print(y[:20])
+print(x[:230])
+print(y[:203])
 
 xx = x.unsqueeze(0)
 # index dim needs to be int
