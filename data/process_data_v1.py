@@ -21,7 +21,7 @@ def unpack_grid(grid):
         unpacked_grid.append(SPECIAL_CHARACTERS["END_ROW"])
     return unpacked_grid
 
-def unpack_example_set(example_set):
+def unpack_example_set(example_set, include_end_example_set=True):
     unpacked_example_set = []
     for example in example_set:
         # each example is a dict with input and output keys
@@ -32,7 +32,8 @@ def unpack_example_set(example_set):
         unpacked_example_set.extend(unpacked_OUTPUT_grid)
         unpacked_example_set.append(SPECIAL_CHARACTERS["END_GRID"])
         unpacked_example_set.append(SPECIAL_CHARACTERS["END_EXAMPLE"])
-    unpacked_example_set.append(SPECIAL_CHARACTERS["END_EXAMPLE_SET"])
+    if include_end_example_set:
+        unpacked_example_set.append(SPECIAL_CHARACTERS["END_EXAMPLE_SET"])
     return unpacked_example_set
 
         

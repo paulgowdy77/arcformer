@@ -23,6 +23,8 @@ TODO:
     - but thats ok, it will be getting exactly the rule, exactly the task from the very beginning
     - still a role for tokenization. imagine a 20x20 array. so thats 400 per grid, x 8 grids, 3200 pixels min.
     - need to figure out the encoding at a per "document" level
+    - the biggest issue is actually the data diversity, now instead of sampling random pixels, I only have N training points where N is the number of examples. so say 100 rules, to get a million points (very low!), need 10,000 examples per rule...
+    - to get 500 Million with 1000 rules, need 500,000 examples per rule... crazy. but that might be what it takes. I really think the document based approach is better
 2. build a model.generate scorer to use during training, check for exact token matches
 
 
