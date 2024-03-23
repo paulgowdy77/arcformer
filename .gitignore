@@ -1,2 +1,4 @@
 data/datasets_v1
+data/vocab_merges_v1
+training/out
 wandb

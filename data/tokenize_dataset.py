@@ -4,7 +4,7 @@ import numpy as np
 import glob
 import os
 
-date_str = "train_set_1"
+date_str = "val_set_1"
 vocab_merge_path = 'data/vocab_merges_v1/train_set_1_processed_examples_bpe_MERGES.pkl'
 
 tokenizer = ArcTokenizer(vocab_merge_path)

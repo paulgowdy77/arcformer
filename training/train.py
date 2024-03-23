@@ -21,12 +21,12 @@ date_time = datetime.now().strftime("%m_%d_%Y_%H:%M:%S")
 wandb_run_name = 'arcformer_dev_'  + date_time
 
 gradient_accumulation_steps = 5 * 8 # used to simulate larger batch sizes
-batch_size = 2 # if gradient_accumulation_steps > 1, this is the micro-batch size
+batch_size = 8 # if gradient_accumulation_steps > 1, this is the micro-batch size
 block_size = 1024
 # model
 n_layer = 64
 n_head = 64
-n_embd = 1024
+n_embd = 512
 bias = False
 dropout = 0.0
 
@@ -49,9 +49,11 @@ dtype = 'bfloat16' if torch.cuda.is_available() and torch.cuda.is_bf16_supported
 iter_num = 0
 best_val_loss = 1e9
 master_process = True
-eval_interval = 4
-log_interval = 1
-out_dir = 'out'
+eval_interval = 10
+log_interval = 2
+eval_batches = 20
+always_save_checkpoint = False
+out_dir = 'training/out/' + str(date_time) + '_out'
 
 os.makedirs(out_dir, exist_ok=True)
 
@@ -66,26 +68,33 @@ ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=
 
 # data
 train_dataset = ArcDatasetV1(
-    encoded_example_dir="data/datasets_v1/20240309-1950/encoded_files", 
+    encoded_example_dir="data/datasets_v1/train_set_1/encoded_files", 
     block_size=block_size,
     device=device, 
     device_type=device_type)
 train_dataloader = ARCDataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
-val_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/20240310-0722/encoded_files", 
+val_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/val_set_1/encoded_files", 
     block_size=block_size,
     device=device, 
     device_type=device_type)
 val_dataloader = ARCDataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
+test_dataset = ArcDatasetV1(encoded_example_dir="data/datasets_v1/test_set_1/encoded_files", 
+    block_size=block_size,
+    device=device, 
+    device_type=device_type)
+test_dataloader = ARCDataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
 
 
+
+SAVE_LOSS_KEY = 'test'
 
 DATALOADER_SPLITS = {
     'train': train_dataloader,
     'val': val_dataloader,
-    'test': None
+    'test': test_dataloader
 }
 
 
@@ -124,12 +133,11 @@ checkpoint = None # free up memory
 def estimate_loss():
     out = {}
     model.eval()
-    #for split in ['train']:
     for split, loader in DATALOADER_SPLITS.items():
         if loader is None:
             continue
-        losses = torch.zeros(10)
-        for k in range(10):
+        losses = torch.zeros(eval_batches)
+        for k in range(eval_batches):
             X, Y = get_batch(loader)
             with ctx:
                 logits, loss = model(X, Y)
@@ -208,19 +216,20 @@ while True:
 
         if wandb_log:
             wandb.log(log_obj)
-        # if True: # losses['val'] < best_val_loss:# or always_save_checkpoint:
-        #     #best_val_loss = losses['val']
-        #     if iter_num > 0:
-        #         checkpoint = {
-        #             'model': raw_model.state_dict(),
-        #             'optimizer': optimizer.state_dict(),
-        #             'model_args': model_args,
-        #             'iter_num': iter_num,
-        #             #'best_val_loss': best_val_loss,
-        #             'config': config,
-        #         }
-        #         print(f"saving checkpoint to {out_dir}")
-        #         torch.save(checkpoint, os.path.join(out_dir, 'ckpt.pt'))
+
+        if losses[SAVE_LOSS_KEY] < best_val_loss or always_save_checkpoint:
+            best_val_loss = losses[SAVE_LOSS_KEY]
+            if iter_num > 0:
+                checkpoint = {
+                    'model': raw_model.state_dict(),
+                    'optimizer': optimizer.state_dict(),
+                    'model_args': model_args,
+                    'iter_num': iter_num,
+                    #'best_val_loss': best_val_loss,
+                    'config': config,
+                }
+                print(f"saving checkpoint to {out_dir}")
+                torch.save(checkpoint, os.path.join(out_dir, 'ckpt.pt'))
 
     # forward backward update, with optional gradient accumulation to simulate larger batch size
     # and using the GradScaler if data type is float16
