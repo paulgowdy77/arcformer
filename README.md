@@ -17,6 +17,20 @@ but it will learn the 'language' the grids, example sets, etc.
 
 
 TODO:
+
+1. try a new data plan that makes every sample contain exactly one example, start at the beginning and get the whole thing, pad the rest
+    - will be wasteful, there will be a punch of pad
+    - but thats ok, it will be getting exactly the rule, exactly the task from the very beginning
+    - still a role for tokenization. imagine a 20x20 array. so thats 400 per grid, x 8 grids, 3200 pixels min.
+    - need to figure out the encoding at a per "document" level
+2. build a model.generate scorer to use during training, check for exact token matches
+
+
+
+
+
+
+
 MORE rules!
 
 train longer with a bigger model prove I can overfit

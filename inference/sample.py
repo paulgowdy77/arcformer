@@ -37,7 +37,7 @@ iter_num = checkpoint['iter_num']
 
 # load test data
 
-test_data_path = 'data/datasets_v1/train_set_1/encoded_files/encoded_data_slice_0.npy'
+test_data_path = 'data/datasets_v1/val_set_1/encoded_files/encoded_data_slice_0.npy'
 test_data = torch.from_numpy(np.load(test_data_path)).to(device)
 print(test_data.shape)
 
